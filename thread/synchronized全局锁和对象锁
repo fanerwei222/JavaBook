@@ -1,0 +1,16 @@
+
+
+## synchronized 全局锁和对象锁
+
+### 对象锁 ：
+        synchronized(this) 以及非 static 的 synchronized 方法，只能防止多个线程同时执行同一个实例对象的同步代码块。
+        即 synchronized 锁住的是括号里的对象，而不是代码块。获取到的非static方法的synchronized方法实际获取到的都是该方法所属
+        实例对象的锁。
+        例如：线程A里面有一个synchronized方法methodA，那么一个类B获取到methodA的同步锁就代表它获取到了线程类A的实例对象A*的锁，
+        如果其他类C、B、D想要执行A*里面除了methodA以外其他的方法，则需要等到B释放了methodA的锁（也就是A*的锁）才行。
+        
+        记住：锁住的是对象。
+        类比：厕所里有个电视机，某人上厕所时关上了锁，其他人也不能进来看电视
+        
+### 全局锁 ：
+        
