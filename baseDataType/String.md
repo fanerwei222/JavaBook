@@ -7,6 +7,23 @@
               String str="hello";//直接赋值的方式
               ** 通过构造方法创建字符串对象是在堆内存
               String str=new String("hello");//实例化的方式
+              ** 对字符串进行拼接操作，也就是做"+"运算的时候，
+                *分2中情况：
+                      i.表达式右边是纯字符串常量，那么存放在栈里面。
+                        *如：
+                          String str1 = "abcd";
+                          String str2 = "ab";
+                          String str3 = "cd";
+                          String str4 = "ab" + "cd";
+                         这里的str4就是纯字符常量，所以str4放在栈里面。
+                        
+                      ii.表达式右边如果存在字符串引用，也就是字符串对象的句柄，那么就存放在堆里面
+                        *如：
+                          String str1 = "abcd";
+                          String str2 = "ab";
+                          String str3 = "cd";
+                          String str4 = str2 + str3;
+                         这里的str4就存在字符串对象引用，引用了str2和str3，所以str4放在堆里面。
 
 ### 2.== 和 equals ：
               ==:
@@ -44,5 +61,14 @@
                当执行new String("hello")语句时，new 关键字还没有生效，括号中的 "hello"会先被产生到堆内存中，此时这个"hello"1是匿名对象"hello"1;
                当new关键字生效时，此时会产生一个新的字符串对象"hello"2，str直接指向"hello"2的堆内存地址,此时"hello"1变为垃圾；
                
-
+### 6.String的intern()方法：
+               String str1 = "aaa";
+               String str2 = "bbb";
+               String str3 = "aaabbb";
+               String str4 = str1 + str2;
+               String str5 = "aaa" + "bbb";
+               System.out.println(str3 == str4); // false
+               System.out.println(str3 == str4.intern()); // true
+               System.out.println(str3 == str5);// true
+               
             
