@@ -115,38 +115,38 @@
 
 ### 9.经典面试题：
                Q：下列程序的输出结果： 
-               String s1 = “abc”; 
-               String s2 = “abc”; 
+               String s1 = "abc"; 
+               String s2 = "abc"; 
                System.out.println(s1 == s2); 
                A：true，均指向常量池中对象。
 
                Q：下列程序的输出结果： 
-               String s1 = new String(“abc”); 
-               String s2 = new String(“abc”); 
+               String s1 = new String("abc"); 
+               String s2 = new String("abc"); 
                System.out.println(s1 == s2); 
                A：false，两个引用指向堆中的不同对象。
 
                Q：下列程序的输出结果： 
-               String s1 = “abc”; 
-               String s2 = “a”; 
-               String s3 = “bc”; 
+               String s1 = "abc"; 
+               String s2 = "a"; 
+               String s3 = "bc"; 
                String s4 = s2 + s3; 
                System.out.println(s1 == s4); 
                A：false，因为s2+s3实际上是使用StringBuilder.append来完成，会生成不同的对象。
 
                Q：下列程序的输出结果： 
-               String s1 = “abc”; 
-               final String s2 = “a”; 
-               final String s3 = “bc”; 
+               String s1 = "abc"; 
+               final String s2 = "a"; 
+               final String s3 = "bc"; 
                String s4 = s2 + s3; 
                System.out.println(s1 == s4); 
                A：true，因为final变量在编译后会直接替换成对应的值，
-                  所以实际上等于s4=”a”+”bc”，而这种情况下，编译器会直接合并为s4=”abc”，所以最终s1==s4。
+                  所以实际上等于s4="a"+"bc"，而这种情况下，编译器会直接合并为s4="abc"，所以最终s1==s4。
 
                Q：下列程序的输出结果： 
-               String s = new String(“abc”); 
-               String s1 = “abc”; 
-               String s2 = new String(“abc”); 
+               String s = new String("abc"); 
+               String s1 = "abc"; 
+               String s2 = new String("abc"); 
                System.out.println(s == s1.intern()); 
                System.out.println(s == s2.intern()); 
                System.out.println(s1 == s2.intern()); 
