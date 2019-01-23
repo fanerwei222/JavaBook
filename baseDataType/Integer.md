@@ -23,6 +23,20 @@
                     
               equals： 如果没有对equals方法进行重写，则比较的是引用类型的变量所指向的对象的地址；
                        诸如String、Date等类对equals方法进行了重写的话，比较的是所指向的对象的内容
+                       
+              /**
+               *Integer equals方法源码
+               */
+              public boolean equals(Object obj)
+              {
+                  if(obj instanceof Integer)
+                      /**
+                       *此处比较的是两个int类型的数值
+                       */
+                      return value == ((Integer)obj).intValue();
+                  else
+                      return false;
+              }
 
 ### 5.缓存
               Integer 类的valueOf()方法;
