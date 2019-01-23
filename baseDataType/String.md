@@ -33,5 +33,14 @@
                System.out.println(str3==str2);//true
                System.out.println(str1==str4);//true
 
-### 4.例子 ：
+### 4.直接赋值方式创建String对象:
+               String str = "jeky";
+               会将匿名对象“jeky”放入对象池，每当下一次对不同的对象进行直接赋值的时候会直接利用池中原有的匿名对象;
+
+### 5.new方式创建String ：
+               String str = new String("hello");
+               当执行new String("hello")语句时，new 关键字还没有生效，括号中的 "hello"会先被产生到堆内存中，此时这个"hello"1是匿名对象"hello"1;
+               当new关键字生效时，此时会产生一个新的字符串对象"hello"2，str直接指向"hello"2的堆内存地址,此时"hello"1变为垃圾；
+               
+
             
