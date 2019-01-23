@@ -31,7 +31,14 @@
               第一次声明会将 i 的值放入缓存中，
               第二次直接取缓存里面的数据，而不是重新创建一个Ingeter 对象;
 
-### 6.运算
+### 6.new关键字
+              通过 new 关键字来创建的两个对象，是不存在缓存的概念的。
+              两个用new关键字创建的对象用 == 进行比较肯定是false；
+              Integer m = new Integer(10);
+              Integer n = new Integer(10);
+              System.out.println(m == n);//false
+
+### 7.运算
 
 ### 例子：
         Integer x1 = new Integer(1);
