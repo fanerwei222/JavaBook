@@ -1,0 +1,47 @@
+
+
+## ** Integer 和 int 
+
+### 1.自动装箱 和 自动拆箱
+              自动装箱： Integer a = 128; ---> Integer a = Integer.valueOf(128);  
+                        //直接给Integer对象赋值会自动把128这个数值装进Integer对象。
+              
+              自动拆箱： Integer a = new Integer(128);
+                        int x  = a; ---> int m = a.intValue();
+                        //直接赋值给int类型变量的Integer对象会被自动拆箱成int类型的数值。
+      
+### 2.默认值
+              Integer 默认值是null；
+              int 默认值是0；
+### 3.存储类型
+              Integer是对象，用一个引用指向这个对象；
+              int 是基本数据类型，直接存储数值；
+
+### 4.equals 和 == 
+
+### 5.缓存
+
+### 6.运算
+
+### 例子：
+        Integer x1 = new Integer(1);
+        Integer x2 = 1;
+        int x3 = 1;
+        int x4 = new Integer(1);
+
+        Integer x11 = new Integer(200);
+        Integer x21 = 200;
+        int x31 = 200;
+        int x41 = new Integer(200);
+
+        System.out.println(x1 == x2);//false
+        System.out.println(x1 == x3);//true
+        System.out.println(x2 == x3);//true
+        System.out.println(x3 == x4);//true
+        System.out.println(x2 == x4);//true
+
+        System.out.println(x11 == x21);//false
+        System.out.println(x11 == x31);//true
+        System.out.println(x21 == x31);//true
+        System.out.println(x31 == x41);//true
+        System.out.println(x21 == x41);//true
