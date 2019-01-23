@@ -18,10 +18,17 @@
               int 是基本数据类型，直接存储数值；
 
 ### 4.equals 和 == 
-              ==    ： 如果作用于基本数据类型的变量，则直接比较其存储的 “值”是否相等；
+              ==(自动进行类型转换)  ：   
+                       如果作用于基本数据类型的变量，则直接比较其存储的 “值”是否相等；
                        如果作用于引用类型的变量，则比较的是所指向的对象的地址；
+                       Long x = 3L;
+                       int y = 3;
+                       x == y;//true ---> x首先会拆箱成long类型，long类型与int类型的y比较则y会向上转换成long类型
+                       ==运算符能将隐含的将小范围的数据类型(int)转换为大范围的数据类型(long/double)，
+                       也就是int会被转换成long类型
                     
-              equals： 如果没有对equals方法进行重写，则比较的是引用类型的变量所指向的对象的地址；
+              equals(不会进行类型转换)： 
+                       如果没有对equals方法进行重写，则比较的是引用类型的变量所指向的对象的地址；
                        诸如String、Date等类对equals方法进行了重写的话，比较的是所指向的对象的内容
                        
               /**
@@ -81,3 +88,25 @@
         System.out.println(x21 == x31);//true  ------->情况8
         System.out.println(x31 == x41);//true  ------->情况9
         System.out.println(x21 == x41);//true  ------->情况10
+        
+        ***-------------------------------------------------------***
+        
+        Integer a = 1;
+        Integer b = 2;
+        Integer c = 3;
+        Integer d = 3;
+
+        Integer e = 321;
+        Integer f = 321;
+
+        Long g = 3L;
+        Long h = 2L;
+
+        System.out.println(c == d);--------------------->true
+        System.out.println(e == f);--------------------->false
+        System.out.println(c == (a + b));--------------->true "==比较符又将左边的自动拆箱，因此它们比较的是数值是否相等"
+        System.out.println(c.equals((a+b)));------------>true
+        System.out.println(g == (a+b));----------------->true
+        System.out.println(g.equals(a+b));-------------->false
+        System.out.println(g.equals(a+h));-------------->true
+
