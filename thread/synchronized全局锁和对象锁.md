@@ -42,9 +42,9 @@
                                         所以锁住的是Something这个类，不影响其它实例化的对象，y调用的是静态方法cSyncB，
                                         则实际调用的是Something.cSyncB()，所以锁住的是Something这个类，
                                         所以x、y需要获取的锁相同，所以不可以同时进行。
-        (04) x.isSyncA()与Something.cSyncA() -->
+        (04) x.isSyncA()与Something.cSyncA() -->实例x调用的是isSyncA方法，Something调用的是静态方法cSyncA，此处实例x和类Something不会相互影响。
         
         01**不能被同时访问**
         02**可以同时被访问**
         03**不能被同时访问**
-        04****
+        04**可以被同时访问**
