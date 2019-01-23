@@ -17,7 +17,8 @@
                           String str4 = "ab" + "cd";
                          这里的str4就是纯字符常量，所以str4放在栈里面。
                         
-                      ii.表达式右边如果存在字符串引用，也就是字符串对象的句柄，那么就存放在堆里面
+                      ii.表达式右边如果存在字符串引用，也就是字符串对象的句柄，那么就存放在堆里面；
+                         常量字符串和变量拼接时（如：String str3=baseStr + “01”;）会调用stringBuilder.append()在堆上创建新的对象。
                         *如：
                           String str1 = "abcd";
                           String str2 = "ab";
@@ -62,6 +63,13 @@
                当new关键字生效时，此时会产生一个新的字符串对象"hello"2，str直接指向"hello"2的堆内存地址,此时"hello"1变为垃圾；
                
 ### 6.String的intern()方法：
+               JDK1.6中 ： str.intern()方法会先去查询常量池中是否已经存在str该字符串，
+                            1)若存在 ：   返回常量池中的引用
+                            2)若不存在 ： 将字符串拷贝到常量池
+               JDK1.7中 ： str.intern()方法会先去查询常量池中是否已经存在str该字符串，
+                            1)若存在 ：   返回常量池中的引用
+                            2)若不存在 ： 不会再将字符串拷贝到常量池，而只是在常量池中生成一个对原字符串在堆上的引用
+
                String str1 = "aaa";
                String str2 = "bbb";
                String str3 = "aaabbb";
@@ -71,4 +79,78 @@
                System.out.println(str3 == str4.intern()); // true
                System.out.println(str3 == str5);// true
                
-            
+### 7.final字符：
+               String s1 = "abc"; 
+               final String s2 = "a"; 
+               final String s3 = "bc"; 
+               String s4 = s2 + s3; 
+               System.out.println(s1 == s4); 
+               A：true，因为final变量在编译后会直接替换成对应的值，所以实际上等于s4="a"+"bc"，
+                  而这种情况下，编译器会直接合并为s4="abc"，所以最终s1==s4。
+                  
+                  
+### 8.举例：
+               String str2 = new String("str")+new String("01");
+               str2.intern();
+               String str1 = "str01";
+               System.out.println(str2==str1);
+               
+               在JDK 1.7下，当执行str2.intern();时，因为常量池中没有“str01”这个字符串，
+               所以会在常量池中生成一个对堆中的"str01"的引用(注意这里是引用 ，
+               就是这个区别于JDK 1.6的地方。在JDK1.6下是生成原字符串的拷贝)，
+               而在进行String str1 = "str01";字面量赋值的时候，
+               常量池中已经存在一个引用，所以直接返回了该引用，
+               因此str1和str2都指向堆中的同一个字符串，返回true
+               
+               String str2 = new String("str")+new String("01");
+               String str1 = "str01";
+               str2.intern();
+               System.out.println(str2==str1);
+               将中间两行调换位置以后，因为在进行字面量赋值（String str1 = “str01″）的时候，
+               常量池中不存在，
+               所以str1指向的常量池中的位置，
+               而str2指向的是堆中的对象，
+               再进行intern方法时，对str1和str2已经没有影响了，
+               所以返回false
+
+### 9.经典面试题：
+               Q：下列程序的输出结果： 
+               String s1 = “abc”; 
+               String s2 = “abc”; 
+               System.out.println(s1 == s2); 
+               A：true，均指向常量池中对象。
+
+               Q：下列程序的输出结果： 
+               String s1 = new String(“abc”); 
+               String s2 = new String(“abc”); 
+               System.out.println(s1 == s2); 
+               A：false，两个引用指向堆中的不同对象。
+
+               Q：下列程序的输出结果： 
+               String s1 = “abc”; 
+               String s2 = “a”; 
+               String s3 = “bc”; 
+               String s4 = s2 + s3; 
+               System.out.println(s1 == s4); 
+               A：false，因为s2+s3实际上是使用StringBuilder.append来完成，会生成不同的对象。
+
+               Q：下列程序的输出结果： 
+               String s1 = “abc”; 
+               final String s2 = “a”; 
+               final String s3 = “bc”; 
+               String s4 = s2 + s3; 
+               System.out.println(s1 == s4); 
+               A：true，因为final变量在编译后会直接替换成对应的值，
+                  所以实际上等于s4=”a”+”bc”，而这种情况下，编译器会直接合并为s4=”abc”，所以最终s1==s4。
+
+               Q：下列程序的输出结果： 
+               String s = new String(“abc”); 
+               String s1 = “abc”; 
+               String s2 = new String(“abc”); 
+               System.out.println(s == s1.intern()); 
+               System.out.println(s == s2.intern()); 
+               System.out.println(s1 == s2.intern()); 
+               A：false，false，true。
+
+               
+
