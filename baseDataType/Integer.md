@@ -40,6 +40,11 @@
 
 ### 7.运算
 
+### 8.比较
+              例子中的：<情况2>;
+              int和Integer(无论new Integer否)比，都为true，
+              因为会把Integer自动拆箱为int再去比较；
+
 ### 例子：
         Integer x1 = new Integer(1);
         Integer x2 = 1;
@@ -51,14 +56,14 @@
         int x31 = 200;
         int x41 = new Integer(200);
 
-        System.out.println(x1 == x2);//false
-        System.out.println(x1 == x3);//true
-        System.out.println(x2 == x3);//true
-        System.out.println(x3 == x4);//true
-        System.out.println(x2 == x4);//true
+        System.out.println(x1 == x2);//false  -------> 情况1
+        System.out.println(x1 == x3);//true  ------->情况2
+        System.out.println(x2 == x3);//true  ------->情况3
+        System.out.println(x3 == x4);//true  ------->情况4
+        System.out.println(x2 == x4);//true  ------->情况5
 
-        System.out.println(x11 == x21);//false
-        System.out.println(x11 == x31);//true
-        System.out.println(x21 == x31);//true
-        System.out.println(x31 == x41);//true
-        System.out.println(x21 == x41);//true
+        System.out.println(x11 == x21);//false  ------->情况6
+        System.out.println(x11 == x31);//true  ------->情况7
+        System.out.println(x21 == x31);//true  ------->情况8
+        System.out.println(x31 == x41);//true  ------->情况9
+        System.out.println(x21 == x41);//true  ------->情况10
