@@ -48,3 +48,12 @@
             i = --i;//
             System.out.println(i);//
             System.out.println(j);//
+            
+### 4.简化版实例解析
+            int i = 10;
+            i = i++;  // 此时, i=10
+
+            执行步骤:
+            int temp = i;
+            i = i + 1;
+            i = temp;
