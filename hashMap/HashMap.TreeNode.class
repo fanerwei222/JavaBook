@@ -1,0 +1,632 @@
+static final class TreeNode extends LinkedHashMap.Entry
+    {
+
+        final TreeNode root()
+        {
+            TreeNode treenode = this;
+            do
+            {
+                TreeNode treenode1;
+                if((treenode1 = treenode.parent) == null)
+                    return treenode;
+                treenode = treenode1;
+            } while(true);
+        }
+
+        static void moveRootToFront(Node anode[], TreeNode treenode)
+        {
+            int i;
+            if(treenode != null && anode != null && (i = anode.length) > 0)
+            {
+                int j = i - 1 & treenode.hash;
+                TreeNode treenode1 = (TreeNode)anode[j];
+                if(treenode != treenode1)
+                {
+                    anode[j] = treenode;
+                    TreeNode treenode2 = treenode.prev;
+                    Node node;
+                    if((node = treenode.next) != null)
+                        ((TreeNode)node).prev = treenode2;
+                    if(treenode2 != null)
+                        treenode2.next = node;
+                    if(treenode1 != null)
+                        treenode1.prev = treenode;
+                    treenode.next = treenode1;
+                    treenode.prev = null;
+                }
+                if(!$assertionsDisabled && !checkInvariants(treenode))
+                    throw new AssertionError();
+            }
+        }
+
+        final TreeNode find(int i, Object obj, Class class1)
+        {
+            TreeNode treenode = this;
+            do
+            {
+                TreeNode treenode1 = treenode.left;
+                TreeNode treenode2 = treenode.right;
+                int j;
+                if((j = treenode.hash) > i)
+                    treenode = treenode1;
+                else
+                if(j < i)
+                {
+                    treenode = treenode2;
+                } else
+                {
+                    Object obj1;
+                    if((obj1 = treenode.key) == obj || obj != null && obj.equals(obj1))
+                        return treenode;
+                    int k;
+                    if(treenode1 == null)
+                        treenode = treenode2;
+                    else
+                    if(treenode2 == null)
+                        treenode = treenode1;
+                    else
+                    if((class1 != null || (class1 = HashMap.comparableClassFor(obj)) != null) && (k = HashMap.compareComparables(class1, obj, obj1)) != 0)
+                    {
+                        treenode = k >= 0 ? treenode2 : treenode1;
+                    } else
+                    {
+                        TreeNode treenode3;
+                        if((treenode3 = treenode2.find(i, obj, class1)) != null)
+                            return treenode3;
+                        treenode = treenode1;
+                    }
+                }
+            } while(treenode != null);
+            return null;
+        }
+
+        final TreeNode getTreeNode(int i, Object obj)
+        {
+            return (parent == null ? this : root()).find(i, obj, null);
+        }
+
+        static int tieBreakOrder(Object obj, Object obj1)
+        {
+            int i;
+            if(obj == null || obj1 == null || (i = obj.getClass().getName().compareTo(obj1.getClass().getName())) == 0)
+                i = System.identityHashCode(obj) > System.identityHashCode(obj1) ? 1 : -1;
+            return i;
+        }
+
+        final void treeify(Node anode[])
+        {
+            TreeNode treenode = null;
+            TreeNode treenode2;
+            for(TreeNode treenode1 = this; treenode1 != null; treenode1 = treenode2)
+            {
+                treenode2 = (TreeNode)treenode1.next;
+                treenode1.left = treenode1.right = null;
+                if(treenode == null)
+                {
+                    treenode1.parent = null;
+                    treenode1.red = false;
+                    treenode = treenode1;
+                    continue;
+                }
+                Object obj = treenode1.key;
+                int i = treenode1.hash;
+                Class class1 = null;
+                TreeNode treenode3 = treenode;
+                int j;
+                TreeNode treenode4;
+                do
+                {
+                    Object obj1 = treenode3.key;
+                    int k;
+                    if((k = treenode3.hash) > i)
+                        j = -1;
+                    else
+                    if(k < i)
+                        j = 1;
+                    else
+                    if(class1 == null && (class1 = HashMap.comparableClassFor(obj)) == null || (j = HashMap.compareComparables(class1, obj, obj1)) == 0)
+                        j = tieBreakOrder(obj, obj1);
+                    treenode4 = treenode3;
+                } while((treenode3 = j > 0 ? treenode3.right : treenode3.left) != null);
+                treenode1.parent = treenode4;
+                if(j <= 0)
+                    treenode4.left = treenode1;
+                else
+                    treenode4.right = treenode1;
+                treenode = balanceInsertion(treenode, treenode1);
+            }
+
+            moveRootToFront(anode, treenode);
+        }
+
+        final Node untreeify(HashMap hashmap)
+        {
+            Node node = null;
+            Node node1 = null;
+            for(Object obj = this; obj != null; obj = ((Node) (obj)).next)
+            {
+                Node node2 = hashmap.replacementNode(((Node) (obj)), null);
+                if(node1 == null)
+                    node = node2;
+                else
+                    node1.next = node2;
+                node1 = node2;
+            }
+
+            return node;
+        }
+
+        final TreeNode putTreeVal(HashMap hashmap, Node anode[], int i, Object obj, Object obj1)
+        {
+            Class class1 = null;
+            boolean flag = false;
+            TreeNode treenode = parent == null ? this : root();
+            TreeNode treenode1 = treenode;
+            int j;
+            TreeNode treenode3;
+            do
+            {
+                int k;
+                if((k = treenode1.hash) > i)
+                    j = -1;
+                else
+                if(k < i)
+                {
+                    j = 1;
+                } else
+                {
+                    Object obj2;
+                    if((obj2 = treenode1.key) == obj || obj != null && obj.equals(obj2))
+                        return treenode1;
+                    if(class1 == null && (class1 = HashMap.comparableClassFor(obj)) == null || (j = HashMap.compareComparables(class1, obj, obj2)) == 0)
+                    {
+                        if(!flag)
+                        {
+                            flag = true;
+                            TreeNode treenode2;
+                            TreeNode treenode4;
+                            if((treenode4 = treenode1.left) != null && (treenode2 = treenode4.find(i, obj, class1)) != null || (treenode4 = treenode1.right) != null && (treenode2 = treenode4.find(i, obj, class1)) != null)
+                                return treenode2;
+                        }
+                        j = tieBreakOrder(obj, obj2);
+                    }
+                }
+                treenode3 = treenode1;
+            } while((treenode1 = j > 0 ? treenode1.right : treenode1.left) != null);
+            Node node = treenode3.next;
+            TreeNode treenode5 = hashmap.newTreeNode(i, obj, obj1, node);
+            if(j <= 0)
+                treenode3.left = treenode5;
+            else
+                treenode3.right = treenode5;
+            treenode3.next = treenode5;
+            treenode5.parent = treenode5.prev = treenode3;
+            if(node != null)
+                ((TreeNode)node).prev = treenode5;
+            moveRootToFront(anode, balanceInsertion(treenode, treenode5));
+            return null;
+        }
+
+        final void removeTreeNode(HashMap hashmap, Node anode[], boolean flag)
+        {
+            int i;
+            if(anode == null || (i = anode.length) == 0)
+                return;
+            int j = i - 1 & hash;
+            TreeNode treenode = (TreeNode)anode[j];
+            TreeNode treenode1 = treenode;
+            TreeNode treenode3 = (TreeNode)next;
+            TreeNode treenode4 = prev;
+            if(treenode4 == null)
+                anode[j] = treenode = treenode3;
+            else
+                treenode4.next = treenode3;
+            if(treenode3 != null)
+                treenode3.prev = treenode4;
+            if(treenode == null)
+                return;
+            if(treenode1.parent != null)
+                treenode1 = treenode1.root();
+            TreeNode treenode2;
+            if(treenode1 == null || treenode1.right == null || (treenode2 = treenode1.left) == null || treenode2.left == null)
+            {
+                anode[j] = treenode.untreeify(hashmap);
+                return;
+            }
+            TreeNode treenode5 = this;
+            TreeNode treenode6 = left;
+            TreeNode treenode7 = right;
+            TreeNode treenode8;
+            if(treenode6 != null && treenode7 != null)
+            {
+                TreeNode treenode9;
+                TreeNode treenode12;
+                for(treenode9 = treenode7; (treenode12 = treenode9.left) != null; treenode9 = treenode12);
+                boolean flag1 = treenode9.red;
+                treenode9.red = treenode5.red;
+                treenode5.red = flag1;
+                TreeNode treenode14 = treenode9.right;
+                TreeNode treenode15 = treenode5.parent;
+                if(treenode9 == treenode7)
+                {
+                    treenode5.parent = treenode9;
+                    treenode9.right = treenode5;
+                } else
+                {
+                    TreeNode treenode16 = treenode9.parent;
+                    if((treenode5.parent = treenode16) != null)
+                        if(treenode9 == treenode16.left)
+                            treenode16.left = treenode5;
+                        else
+                            treenode16.right = treenode5;
+                    if((treenode9.right = treenode7) != null)
+                        treenode7.parent = treenode9;
+                }
+                treenode5.left = null;
+                if((treenode5.right = treenode14) != null)
+                    treenode14.parent = treenode5;
+                if((treenode9.left = treenode6) != null)
+                    treenode6.parent = treenode9;
+                if((treenode9.parent = treenode15) == null)
+                    treenode1 = treenode9;
+                else
+                if(treenode5 == treenode15.left)
+                    treenode15.left = treenode9;
+                else
+                    treenode15.right = treenode9;
+                if(treenode14 != null)
+                    treenode8 = treenode14;
+                else
+                    treenode8 = treenode5;
+            } else
+            if(treenode6 != null)
+                treenode8 = treenode6;
+            else
+            if(treenode7 != null)
+                treenode8 = treenode7;
+            else
+                treenode8 = treenode5;
+            if(treenode8 != treenode5)
+            {
+                TreeNode treenode10 = treenode8.parent = treenode5.parent;
+                if(treenode10 == null)
+                    treenode1 = treenode8;
+                else
+                if(treenode5 == treenode10.left)
+                    treenode10.left = treenode8;
+                else
+                    treenode10.right = treenode8;
+                treenode5.left = treenode5.right = treenode5.parent = null;
+            }
+            TreeNode treenode11 = treenode5.red ? treenode1 : balanceDeletion(treenode1, treenode8);
+            if(treenode8 == treenode5)
+            {
+                TreeNode treenode13 = treenode5.parent;
+                treenode5.parent = null;
+                if(treenode13 != null)
+                    if(treenode5 == treenode13.left)
+                        treenode13.left = null;
+                    else
+                    if(treenode5 == treenode13.right)
+                        treenode13.right = null;
+            }
+            if(flag)
+                moveRootToFront(anode, treenode11);
+        }
+
+        final void split(HashMap hashmap, Node anode[], int i, int j)
+        {
+            TreeNode treenode = this;
+            TreeNode treenode1 = null;
+            TreeNode treenode2 = null;
+            TreeNode treenode3 = null;
+            TreeNode treenode4 = null;
+            int k = 0;
+            int l = 0;
+            TreeNode treenode6;
+            for(TreeNode treenode5 = treenode; treenode5 != null; treenode5 = treenode6)
+            {
+                treenode6 = (TreeNode)treenode5.next;
+                treenode5.next = null;
+                if((treenode5.hash & j) == 0)
+                {
+                    if((treenode5.prev = treenode2) == null)
+                        treenode1 = treenode5;
+                    else
+                        treenode2.next = treenode5;
+                    treenode2 = treenode5;
+                    k++;
+                    continue;
+                }
+                if((treenode5.prev = treenode4) == null)
+                    treenode3 = treenode5;
+                else
+                    treenode4.next = treenode5;
+                treenode4 = treenode5;
+                l++;
+            }
+
+            if(treenode1 != null)
+                if(k <= 6)
+                {
+                    anode[i] = treenode1.untreeify(hashmap);
+                } else
+                {
+                    anode[i] = treenode1;
+                    if(treenode3 != null)
+                        treenode1.treeify(anode);
+                }
+            if(treenode3 != null)
+                if(l <= 6)
+                {
+                    anode[i + j] = treenode3.untreeify(hashmap);
+                } else
+                {
+                    anode[i + j] = treenode3;
+                    if(treenode1 != null)
+                        treenode3.treeify(anode);
+                }
+        }
+
+        static TreeNode rotateLeft(TreeNode treenode, TreeNode treenode1)
+        {
+            TreeNode treenode2;
+            if(treenode1 != null && (treenode2 = treenode1.right) != null)
+            {
+                TreeNode treenode4;
+                if((treenode4 = treenode1.right = treenode2.left) != null)
+                    treenode4.parent = treenode1;
+                TreeNode treenode3;
+                if((treenode3 = treenode2.parent = treenode1.parent) == null)
+                    (treenode = treenode2).red = false;
+                else
+                if(treenode3.left == treenode1)
+                    treenode3.left = treenode2;
+                else
+                    treenode3.right = treenode2;
+                treenode2.left = treenode1;
+                treenode1.parent = treenode2;
+            }
+            return treenode;
+        }
+
+        static TreeNode rotateRight(TreeNode treenode, TreeNode treenode1)
+        {
+            TreeNode treenode2;
+            if(treenode1 != null && (treenode2 = treenode1.left) != null)
+            {
+                TreeNode treenode4;
+                if((treenode4 = treenode1.left = treenode2.right) != null)
+                    treenode4.parent = treenode1;
+                TreeNode treenode3;
+                if((treenode3 = treenode2.parent = treenode1.parent) == null)
+                    (treenode = treenode2).red = false;
+                else
+                if(treenode3.right == treenode1)
+                    treenode3.right = treenode2;
+                else
+                    treenode3.left = treenode2;
+                treenode2.right = treenode1;
+                treenode1.parent = treenode2;
+            }
+            return treenode;
+        }
+
+        static TreeNode balanceInsertion(TreeNode treenode, TreeNode treenode1)
+        {
+            treenode1.red = true;
+            do
+            {
+                TreeNode treenode2;
+                if((treenode2 = treenode1.parent) == null)
+                {
+                    treenode1.red = false;
+                    return treenode1;
+                }
+                TreeNode treenode3;
+                if(!treenode2.red || (treenode3 = treenode2.parent) == null)
+                    return treenode;
+                TreeNode treenode4;
+                TreeNode treenode5;
+                if(treenode2 == (treenode4 = treenode3.left))
+                {
+                    if((treenode5 = treenode3.right) != null && treenode5.red)
+                    {
+                        treenode5.red = false;
+                        treenode2.red = false;
+                        treenode3.red = true;
+                        treenode1 = treenode3;
+                    } else
+                    {
+                        if(treenode1 == treenode2.right)
+                        {
+                            treenode = rotateLeft(treenode, treenode1 = treenode2);
+                            treenode3 = (treenode2 = treenode1.parent) != null ? treenode2.parent : null;
+                        }
+                        if(treenode2 != null)
+                        {
+                            treenode2.red = false;
+                            if(treenode3 != null)
+                            {
+                                treenode3.red = true;
+                                treenode = rotateRight(treenode, treenode3);
+                            }
+                        }
+                    }
+                } else
+                if(treenode4 != null && treenode4.red)
+                {
+                    treenode4.red = false;
+                    treenode2.red = false;
+                    treenode3.red = true;
+                    treenode1 = treenode3;
+                } else
+                {
+                    if(treenode1 == treenode2.left)
+                    {
+                        treenode = rotateRight(treenode, treenode1 = treenode2);
+                        treenode3 = (treenode2 = treenode1.parent) != null ? treenode2.parent : null;
+                    }
+                    if(treenode2 != null)
+                    {
+                        treenode2.red = false;
+                        if(treenode3 != null)
+                        {
+                            treenode3.red = true;
+                            treenode = rotateLeft(treenode, treenode3);
+                        }
+                    }
+                }
+            } while(true);
+        }
+
+        static TreeNode balanceDeletion(TreeNode treenode, TreeNode treenode1)
+        {
+            do
+            {
+                if(treenode1 == null || treenode1 == treenode)
+                    return treenode;
+                TreeNode treenode2;
+                if((treenode2 = treenode1.parent) == null)
+                {
+                    treenode1.red = false;
+                    return treenode1;
+                }
+                if(treenode1.red)
+                {
+                    treenode1.red = false;
+                    return treenode;
+                }
+                TreeNode treenode3;
+                if((treenode3 = treenode2.left) == treenode1)
+                {
+                    TreeNode treenode4;
+                    if((treenode4 = treenode2.right) != null && treenode4.red)
+                    {
+                        treenode4.red = false;
+                        treenode2.red = true;
+                        treenode = rotateLeft(treenode, treenode2);
+                        treenode4 = (treenode2 = treenode1.parent) != null ? treenode2.right : null;
+                    }
+                    if(treenode4 == null)
+                    {
+                        treenode1 = treenode2;
+                    } else
+                    {
+                        TreeNode treenode5 = treenode4.left;
+                        TreeNode treenode8 = treenode4.right;
+                        if((treenode8 == null || !treenode8.red) && (treenode5 == null || !treenode5.red))
+                        {
+                            treenode4.red = true;
+                            treenode1 = treenode2;
+                        } else
+                        {
+                            if(treenode8 == null || !treenode8.red)
+                            {
+                                if(treenode5 != null)
+                                    treenode5.red = false;
+                                treenode4.red = true;
+                                treenode = rotateRight(treenode, treenode4);
+                                treenode4 = (treenode2 = treenode1.parent) != null ? treenode2.right : null;
+                            }
+                            if(treenode4 != null)
+                            {
+                                treenode4.red = treenode2 != null ? treenode2.red : false;
+                                TreeNode treenode9;
+                                if((treenode9 = treenode4.right) != null)
+                                    treenode9.red = false;
+                            }
+                            if(treenode2 != null)
+                            {
+                                treenode2.red = false;
+                                treenode = rotateLeft(treenode, treenode2);
+                            }
+                            treenode1 = treenode;
+                        }
+                    }
+                } else
+                {
+                    if(treenode3 != null && treenode3.red)
+                    {
+                        treenode3.red = false;
+                        treenode2.red = true;
+                        treenode = rotateRight(treenode, treenode2);
+                        treenode3 = (treenode2 = treenode1.parent) != null ? treenode2.left : null;
+                    }
+                    if(treenode3 == null)
+                    {
+                        treenode1 = treenode2;
+                    } else
+                    {
+                        TreeNode treenode6 = treenode3.left;
+                        TreeNode treenode10 = treenode3.right;
+                        if((treenode6 == null || !treenode6.red) && (treenode10 == null || !treenode10.red))
+                        {
+                            treenode3.red = true;
+                            treenode1 = treenode2;
+                        } else
+                        {
+                            if(treenode6 == null || !treenode6.red)
+                            {
+                                if(treenode10 != null)
+                                    treenode10.red = false;
+                                treenode3.red = true;
+                                treenode = rotateLeft(treenode, treenode3);
+                                treenode3 = (treenode2 = treenode1.parent) != null ? treenode2.left : null;
+                            }
+                            if(treenode3 != null)
+                            {
+                                treenode3.red = treenode2 != null ? treenode2.red : false;
+                                TreeNode treenode7;
+                                if((treenode7 = treenode3.left) != null)
+                                    treenode7.red = false;
+                            }
+                            if(treenode2 != null)
+                            {
+                                treenode2.red = false;
+                                treenode = rotateRight(treenode, treenode2);
+                            }
+                            treenode1 = treenode;
+                        }
+                    }
+                }
+            } while(true);
+        }
+
+        static boolean checkInvariants(TreeNode treenode)
+        {
+            TreeNode treenode1 = treenode.parent;
+            TreeNode treenode2 = treenode.left;
+            TreeNode treenode3 = treenode.right;
+            TreeNode treenode4 = treenode.prev;
+            TreeNode treenode5 = (TreeNode)treenode.next;
+            if(treenode4 != null && treenode4.next != treenode)
+                return false;
+            if(treenode5 != null && treenode5.prev != treenode)
+                return false;
+            if(treenode1 != null && treenode != treenode1.left && treenode != treenode1.right)
+                return false;
+            if(treenode2 != null && (treenode2.parent != treenode || treenode2.hash > treenode.hash))
+                return false;
+            if(treenode3 != null && (treenode3.parent != treenode || treenode3.hash < treenode.hash))
+                return false;
+            if(treenode.red && treenode2 != null && treenode2.red && treenode3 != null && treenode3.red)
+                return false;
+            if(treenode2 != null && !checkInvariants(treenode2))
+                return false;
+            return treenode3 == null || checkInvariants(treenode3);
+        }
+
+        TreeNode parent;
+        TreeNode left;
+        TreeNode right;
+        TreeNode prev;
+        boolean red;
+        static final boolean $assertionsDisabled = !java/util/HashMap.desiredAssertionStatus();
+
+
+        TreeNode(int i, Object obj, Object obj1, Node node)
+        {
+            super(i, obj, obj1, node);
+        }
+    }
