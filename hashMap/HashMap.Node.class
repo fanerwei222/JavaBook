@@ -1,0 +1,57 @@
+static class Node
+        implements Map.Entry
+    {
+
+        public final Object getKey()
+        {
+            return key;
+        }
+
+        public final Object getValue()
+        {
+            return value;
+        }
+
+        public final String toString()
+        {
+            return (new StringBuilder()).append(key).append("=").append(value).toString();
+        }
+
+        public final int hashCode()
+        {
+            return Objects.hashCode(key) ^ Objects.hashCode(value);
+        }
+
+        public final Object setValue(Object obj)
+        {
+            Object obj1 = value;
+            value = obj;
+            return obj1;
+        }
+
+        public final boolean equals(Object obj)
+        {
+            if(obj == this)
+                return true;
+            if(obj instanceof Map.Entry)
+            {
+                Map.Entry entry = (Map.Entry)obj;
+                if(Objects.equals(key, entry.getKey()) && Objects.equals(value, entry.getValue()))
+                    return true;
+            }
+            return false;
+        }
+
+        final int hash;
+        final Object key;
+        Object value;
+        Node next;
+
+        Node(int i, Object obj, Object obj1, Node node)
+        {
+            hash = i;
+            key = obj;
+            value = obj1;
+            next = node;
+        }
+    }
