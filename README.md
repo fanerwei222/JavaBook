@@ -1,2 +1,2 @@
 # JavaBook 知识点
-JavaBook
+电子书
