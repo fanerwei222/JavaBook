@@ -14,6 +14,6 @@
                            6.如果equals方法得到的结果为false，则两个对象的hashcode值不一定不同
                            7.如果两个对象的hashcode值不等，则equals方法得到的结果必定为false
                            8.如果两个对象的hashcode值相等，则equals方法得到的结果未知
-                           
+            4. & ：        位与运算.
                            
 
