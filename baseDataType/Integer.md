@@ -66,7 +66,7 @@
               int和Integer(无论new Integer否)比，都为true，
               因为会把Integer自动拆箱为int再去比较；
 
-### 例子：
+### 9.例子：
         Integer x1 = new Integer(1);
         Integer x2 = 1;
         int x3 = 1;
@@ -110,3 +110,7 @@
         System.out.println(g.equals(a+b));-------------->false
         System.out.println(g.equals(a+h));-------------->true
 
+### 10.扩展理解
+        int和任意Integer都是同一地址                        
+        Integer只在127范围内才是同地址，超出就false              
+        new Integer()与Integer,new Integer()无论什么数范围 都不同地址
