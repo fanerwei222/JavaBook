@@ -42,7 +42,33 @@
                                           }
                                     };
                                     Adapter调用C中的方法;
-                        c.接口适配器
+                        c.接口适配器 : 普通类通过继承一个实现了有很多方法的接口的抽象父类来调用该接口部分方法的方式。
+                                    Interface A{
+                                          method_one();
+                                          method_two();
+                                          method_three();
+                                    };
+                                    abstract Class B implements A{
+                                          @Override
+                                          method_one(){
+                                                //do something;
+                                          };
+                                          @Override
+                                          method_two(){
+                                                //do something;
+                                          };
+                                          @Override
+                                          method_three(){
+                                                //do something;
+                                          };
+                                    };
+                                    Class C extends B{
+                                          //只重写method_one方法
+                                          @Override
+                                          method_one(){
+                                                //do something;
+                                          };
+                                    }
                 2.装饰器模式
                 3.代理模式
                 4.外观模式
