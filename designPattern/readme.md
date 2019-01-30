@@ -127,6 +127,48 @@
                                           };
                                     }
                 2.装饰器模式
+                        适用场景：动态的修饰一个对象。用对象之间的关联关系取代类之间的继承关系，扩充新功能。
+                        具体实现：
+                                    //一个统一接口，装饰类和被装饰类都要实现的基本类型
+                                    Interface Component{
+                                          //共同的方法
+                                          method_toge();
+                                    }
+                                    //装饰类
+                                    Class Decorator implements Component{
+                                          //传入的被装饰类
+                                          Component cpt;
+                                          Decorator(Component cpt){
+                                                this.cpt = cpt;
+                                          }
+                                          @Override
+                                          method_toge(){
+                                                //do something;
+                                                cpt.method_toge();
+                                          }
+                                    }
+                                    //被装饰类
+                                    Class ConcreteComponent implements Component{
+                                          //被装饰类本身的执行方法
+                                          @Override
+                                          method_toge(){
+                                                //do something;
+                                                sysout("do something");
+                                          }
+                                    }
+                                    //具体装饰类
+                                    Class ConcreteDecorator extends Decorator{
+                                          //构造器传入具体被装饰类
+                                          ConcreteDecorator(Component cpt){
+                                                super(cpt);
+                                          }
+                                          @Override
+                                          method_toge(){
+                                                //重写父类的方法，在下面的方法前执行一些扩展操作
+                                                <!-- 此处执行某些扩展操作 -->
+                                                cpt.method_toge();
+                                          }
+                                    }
                 3.代理模式
                 4.外观模式
                 5.桥接模式
@@ -262,3 +304,12 @@
                 9.访问者模式
                 10.中介者模式
                 11.解释器模式
+                
+                
+                
+### 四 ：其中一些模式之间的区别
+                1.装饰者模式 VS 代理模式
+                        使用代理模式，代理和真实对象之间的的关系通常在编译时就已经确定了，而装饰者能够在运行时递归地被构造。
+                        装饰模式应该为所装饰的对象增强功能；代理模式对代理的对象施加控制，并不提供对象本身的增强功能。
+                        
+                
