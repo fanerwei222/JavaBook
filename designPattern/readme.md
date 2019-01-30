@@ -28,7 +28,20 @@
                                     Class C implements B;
                                     Class Adapter extends C implements A;
                                     Adapter调用C中的方法;
-                        b.对象适配器
+                        b.对象适配器 : 通过组合实现适配器功能
+                                    Interface A;
+                                    Interface B;
+                                    Class C implements B;
+                                    Class Adapter implements A{
+                                          B b;
+                                          Adapter(B b){
+                                                this.b = b;
+                                          }
+                                          Method(){
+                                                b.doSomething();
+                                          }
+                                    };
+                                    Adapter调用C中的方法;
                         c.接口适配器
                 2.装饰器模式
                 3.代理模式
