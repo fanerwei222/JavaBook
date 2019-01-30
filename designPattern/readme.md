@@ -164,6 +164,45 @@
                 4.迭代子模式
                 5.责任链模式
                 6.命令模式
+                        适用场景：高级对象给中级对象下命令，中级对象命令低级对象处理问题。（高中低之间的通信问题）
+                        具体实现：
+                                    //低级对象
+                                    Class Low{
+                                          doWork(){
+                                                //do work;
+                                          };
+                                    }
+                                    //中级对象
+                                    Class Middle{
+                                          //会收到的命令
+                                          Command cmd;
+                                          //set命令进来
+                                          setter/getter;
+                                          //执行命令方法（假执行，实际是叫低级对象去执行）
+                                          action(){
+                                                cmd.execute();
+                                          }
+                                    }
+                                    //命令
+                                    abstract Class Command{
+                                          //实际执行者
+                                          Low low;
+                                          //执行命令
+                                          abstract execute();
+                                    }
+                                    //具体命令
+                                    Class ConcreteCommand extends Command{
+                                          //构造器传入Low对象
+                                          ConcreteCommand(Low low){
+                                                super.low = low;
+                                          }
+                                          @Override
+                                          execute(){
+                                                //直接调用父类的low
+                                                low.doWork();
+                                          }
+                                    }
+                                    
                 7.备忘录模式
                 8.状态模式
                 9.访问者模式
