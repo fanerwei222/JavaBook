@@ -17,6 +17,63 @@
                 2.抽象工厂方法模式
                 3.单例模式
                 4.建造者模式
+                        定义：将一个复杂对象的构造与它的表示分离，使同样的构建过程可以创建不同的表示，这样的设计模式被称为建造者模式。
+                        个人理解：（需要将复杂对象的构造和最终形态（根据构造的顺序或者构造步骤的多少形成不同的样子）分离开。）
+                        适用场景：   1.多构造器
+                                    2.方法执行顺序可形成不同形态的对象
+                                    3.所要实现的对象十分复杂
+                        具体实现： 
+                                    //要实现的对象X
+                                    Class ObjectX{
+                                          String a;
+                                          String b;
+                                          String c;
+                                          setter/getter;
+                                    }
+                                    //建造方法接口
+                                    Interface CreateMethod{
+                                          //方法1-3调换顺序可以生成不同形态的对象
+                                          part_one();
+                                          part_two();
+                                          part_three();
+                                          //创建对象
+                                          ObjectX createObject();
+                                    }
+                                    //实现接口的类MethodImpl
+                                    Class MethodImpl implements CreateMethod{
+                                          ObjectX x;
+                                          @Override
+                                          part_one(){
+                                                //do something;
+                                                x.setter;
+                                          };
+                                          @Override
+                                          part_two(){
+                                                //do something;
+                                                x.setter;
+                                          };
+                                          @Override
+                                          part_three){
+                                                //do something;
+                                                x.setter;
+                                          };
+                                          //创建对象
+                                          @Override
+                                          ObjectX createObject(){
+                                                return x;
+                                          };
+                                    }
+                                    
+                                    //执行器---通过执行器来创建一个对象
+                                    Class Director{
+                                          ObjectX createObjectXByDirector(CreateMethod method){
+                                                method.part_one();
+                                                method.part_two();
+                                                method.part_three();
+                                                
+                                                return method.createObject();
+                                          }
+                                    }
                 5.原型模式
 
 ### 二 ： 结构型 ： 组合类和对象形成新的结构。类有关的多用继承，对象有关的多用对象组合（类或对象之间的组织关系）。
