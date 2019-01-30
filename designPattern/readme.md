@@ -73,6 +73,30 @@
                 3.代理模式
                 4.外观模式
                 5.桥接模式
+                        适用场景：一个类需要使用到两个独立维度（功能形态完全不相关）的对象。
+                        具体实现：
+                                    //维度X
+                                    Interface X{
+                                          //X维度的方法,Param由相关的维度实现类去选择
+                                          method_xone(Param);
+                                    };
+                                    //维度Y
+                                    abstract Class Y{
+                                          //组合X
+                                          X x;
+                                          method_setX(X x){
+                                                this.x = x;
+                                          }
+                                          //Y维度的方法
+                                          abstract method_yone();
+                                    };
+                                    Class z extends Y{
+                                          @Override
+                                          method_yone(){
+                                                //直接调用Y中的x，Param可传入与z有关的东西
+                                                x.method_xone(Param);
+                                          };
+                                    }
                 6.组合模式
                 7.享元模式
 
