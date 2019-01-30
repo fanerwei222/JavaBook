@@ -155,6 +155,60 @@
                                           };
                                     }
                 6.组合模式
+                        使用场景：处理树形结构。一致性地处理树形结构中的叶子节点（不包含子节点的节点）和容器节点（包含子节点的节点）
+                        具体实现：
+                                    //定义个抽象父类，里面会有子类共有属性，并且可以提供一个构造器或者setter/getter方法
+                                    abstract Class Component{
+                                          protected String name;
+                                          protected String desc;
+                                          Component(String name, String desc){
+                                                this.name = name;
+                                                this.desc = desc;
+                                          }
+                                          //只有容器才有的方法
+                                          abstract method_one(Component c);
+                                          abstract method_two(Component c);
+                                          //叶子和容器共有的方法
+                                          abstract method_opration();
+                                    }
+                                    //定义一个容器构件
+                                    Class Composite extends Component{
+                                          List<Component> list = new List<Component>;
+                                          @Override
+                                          abstract method_one(Component c){
+                                                //例如添加构件
+                                                list.add(c);
+                                          }
+                                          @Override
+                                          abstract method_two(Component c){
+                                                //例如删除构件
+                                                list.remove(c);
+                                          }
+                                          @Override
+                                          abstract method_opration(){
+                                                //容器构件具体业务方法的实现  ；
+                                                //例如 ： 递归调用成员构件的业务方法
+                                                for (Component component : list)
+                                                {
+                                                    component.operation();
+                                                }
+                                          }
+                                    }
+                                    //定义一个叶子构件
+                                    Class Leaf extends Component{
+                                          @Override
+                                          abstract method_one(){
+                                                //抛出异常或者其他处理
+                                          }
+                                          @Override
+                                          abstract method_two(){
+                                                //抛出异常或者其他处理
+                                          }
+                                          @Override
+                                          abstract method_opration(){
+                                                //叶子构件具体业务方法的实现  
+                                          }
+                                    }
                 7.享元模式
 
 ### 三 ： 行为型 ： 关注对象之间的通信，关注类或对象间的交互和职责分配。（职责和行为）
