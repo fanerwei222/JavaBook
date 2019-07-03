@@ -193,20 +193,20 @@
 ### 11.new String() + new String() 情况：
                //声明：String s = new String(字面量);字面量会和new String(字面量)同时存在；且不是
                String s = new String("1");//此时存在一个字面量 1，并且在常量池中；
-               String s2 = "1";
+               String s2 = "1";//此时的s2真实引用其实是常量池中的字面量“1”，所以和s不同
                s.intern();
                System.out.println(s == s2);//false
                String s3 = new String("1") + new String("1");
-               String s4 = "11";
+               String s4 = "11";//此时的常量池中不存在字面量“11”
                s3.intern();
                System.out.println(s3 == s4);//false
 
                String ss = new String("2");
                ss.intern();
-               String ss2 = "2";
+               String ss2 = "2";//此时的ss2真实引用其实是常量池中的字面量“2”，所以和ss不同，因为ss.intern()发现常量池中已经有字面量“2”了就不会再生成任何变量“2”了，所以ss2和ss的地址引用是不同的。
                System.out.println(ss == ss2);//false
-               String ss3 = new String("2") + new String("2");
-               ss3.intern();
-               String ss4 = "22";
+               String ss3 = new String("2") + new String("2");//此过程不产生字面量“22”，只产生一个字面量“2”和一个堆上变量“22”
+               ss3.intern();//此处会将堆变量“22”的地址引用放入常量池
+               String ss4 = "22";//此处的“22” 其实是ss3的内存地址。
                System.out.println(ss3 == ss4);//true
 
