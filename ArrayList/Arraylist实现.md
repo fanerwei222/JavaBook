@@ -273,8 +273,8 @@
 			当在index处删除一个元素的时候，会将数组index处右边的元素全部左移
 			
 ### 主要关键点：
-① Object[] 数组
-② 检查下标是否越界
-③ 扩容
-④ 拷贝（Arrays.copyOf和System.arraycopy）
-⑥ modCount操作数
+			① Object[] 数组
+			② 检查下标是否越界
+			③ 扩容
+			④ 拷贝（Arrays.copyOf和System.arraycopy）
+			⑥ modCount操作数
