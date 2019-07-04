@@ -264,10 +264,17 @@
 				return obj;
 			}
 			
-		ArrayList小结：
+### ArrayList小结：
 			ArrayList是List接口的一个可变大小的数组的实现
 			ArrayList的内部是使用一个Object对象数组来存储元素的
 			初始化ArrayList的时候，可以指定初始化容量的大小，如果不指定，就会使用默认大小，为10
 			当添加一个新元素的时候，首先会检查容量是否足够添加这个元素，如果够就直接添加，如果不够就进行扩容，扩容为原数组容量的1.5倍
 			当在index处放置一个元素的时候，会将数组index处右边的元素全部右移
 			当在index处删除一个元素的时候，会将数组index处右边的元素全部左移
+			
+### 主要关键点：
+① Object[] 数组
+② 检查下标是否越界
+③ 扩容
+④ 拷贝（Arrays.copyOf和System.arraycopy）
+⑥ modCount操作数
