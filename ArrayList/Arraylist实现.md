@@ -1,15 +1,15 @@
 
-1.  ArrayList 动态数组，底层使用数组保存所有元素
-	属性：
+### 1.  ArrayList 动态数组，底层使用数组保存所有元素
+	#### 属性：
 		transient Object[] elementData;数据的数组，transient表示不参与序列化过程
 		private int size;实际数据的数量
 	
-	构造方法：
+	#### 构造方法：
 		private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {};
 		public ArrayList(){
 			this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
 		}
-	默认情况下初始化空数组：
+	#### 默认情况下初始化空数组：
 		private static final Object[] EMPTY_ELEMENTDATA = {};
 		public ArrayList(int initialCapacity){
 			if(initialCapacity > 0){
@@ -20,7 +20,7 @@
 				throw new IllegalArgumentException("初始化容量不能小于0！");
 			}
 		}
-	初始化指定集合的数组：
+	#### 初始化指定集合的数组：
 		public ArrayList(Collection<? extends E> c){
 			elementData = c.toArray();
 			if((size = elementData.length) != 0 ){
@@ -31,7 +31,7 @@
 				this.elementData = EMPTY_ELEMENTDATA;
 			}
 		}
-	常用方法：
+	#### 常用方法：
 		1) E get(int index); 获取index位置的元素
 			E elementData(int index){
 				//返回index下标的元素且强制转化为E（List<E>中的E）类型
